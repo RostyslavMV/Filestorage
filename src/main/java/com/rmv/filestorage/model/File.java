@@ -10,7 +10,10 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Document(indexName = "storage", indexStoreType = "file")
 @Getter
@@ -28,10 +31,11 @@ public class File {
     private long size;
 
     @Field(type = FieldType.Nested, includeInParent = true)
-    private List<String> tags;
+    private Set<String> tags;
 
     public File(String name, long size) {
         this.name = name;
         this.size = size;
+        tags = new LinkedHashSet<>();
     }
 }
