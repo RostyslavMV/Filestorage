@@ -10,9 +10,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @Document(indexName = "storage", indexStoreType = "file")

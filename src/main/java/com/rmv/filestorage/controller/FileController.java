@@ -12,10 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -102,10 +99,12 @@ public class FileController {
         Page<File> filesPage;
         if (tags == null || tags.length == 0) {
             filesPage = fileRepository.findAll(PageRequest.of(page, size));
-            map.put("total", Long.toString(filesPage.getTotalElements()));
-            map.put("page", filesPage.getContent());
+        } else {
+            Set<String> tagsSet = new HashSet<>(Arrays.asList(tags));
+            filesPage = fileRepository.findAllByTags(tagsSet, PageRequest.of(page, size));
         }
-
+        map.put("total", Long.toString(filesPage.getTotalElements()));
+        map.put("page", filesPage.getContent());
 
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
