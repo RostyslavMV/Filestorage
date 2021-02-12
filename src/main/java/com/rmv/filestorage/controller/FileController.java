@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/file")
 public class FileController {
 
     private final FileRepository fileRepository;
@@ -24,7 +26,7 @@ public class FileController {
         this.fileRepository = fileRepository;
     }
 
-    @PostMapping("/file")
+    @PostMapping
     public ResponseEntity<HashMap<String, String>> uploadFile(@RequestBody @Valid File file,
                                                               BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -41,17 +43,25 @@ public class FileController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
-    @DeleteMapping("/file/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HashMap<String, String>> deleteFile(@PathVariable String id) {
         Optional<File> file = fileRepository.findById(id);
         if (file.isEmpty()) {
             return new ResponseEntity<>(getErrorMap("file not found"), HttpStatus.NOT_FOUND);
         }
         fileRepository.delete(file.get());
-        return new ResponseEntity<>(getSucessMap(), HttpStatus.OK);
+        return getSuccessResponseEntity();
     }
 
-
+    @PostMapping("/{id}/tags")
+    public ResponseEntity<HashMap<String, String>> assignTags(@PathVariable String id, @RequestBody List<String> tags){
+        Optional<File> file = fileRepository.findById(id);
+        if (file.isEmpty()) {
+            return new ResponseEntity<>(getErrorMap("file not found"), HttpStatus.NOT_FOUND);
+        }
+        file.get().setTags(tags);
+        return getSuccessResponseEntity();
+    }
 
     private HashMap<String, String> getErrorMap(String errorText) {
         HashMap<String, String> map = new HashMap<>();
@@ -60,9 +70,9 @@ public class FileController {
         return map;
     }
 
-    private HashMap<String, String> getSucessMap(){
+    private ResponseEntity<HashMap<String, String>> getSuccessResponseEntity(){
         HashMap<String, String> map = new HashMap<>();
         map.put("success", "true");
-        return map;
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 }
