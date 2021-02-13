@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -22,8 +21,10 @@ import java.util.Set;
 public class FileService{
 
     private final FileRepository fileRepository;
+    private final FIieExtensionToTagService fIleExtensionToTagService;
 
     public File save(File file){
+        fIleExtensionToTagService.getTagByExtension(file);
         return fileRepository.save(file);
     }
 
