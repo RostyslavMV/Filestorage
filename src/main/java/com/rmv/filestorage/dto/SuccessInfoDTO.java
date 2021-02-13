@@ -6,6 +6,6 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SuccessInfo {
+public class SuccessInfoDTO {
     protected boolean success;
 }

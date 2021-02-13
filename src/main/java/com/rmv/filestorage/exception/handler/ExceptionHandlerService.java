@@ -1,6 +1,6 @@
 package com.rmv.filestorage.exception.handler;
 
-import com.rmv.filestorage.dto.ErrorInfo;
+import com.rmv.filestorage.dto.ErrorInfoDTO;
 import com.rmv.filestorage.exception.BadRequestException;
 import com.rmv.filestorage.exception.FileNotFoundInRepositoryException;
 import org.springframework.http.HttpStatus;
@@ -16,8 +16,8 @@ public class ExceptionHandlerService {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({FileNotFoundInRepositoryException.class, BadRequestException.class})
     @ResponseBody
-    public ResponseEntity<ErrorInfo> exceptionHandler(Exception ex) {
-        return new ResponseEntity<>(new ErrorInfo(ex.getMessage()),
+    public ResponseEntity<ErrorInfoDTO> exceptionHandler(Exception ex) {
+        return new ResponseEntity<>(new ErrorInfoDTO(ex.getMessage()),
                 ex instanceof FileNotFoundInRepositoryException ? HttpStatus.NOT_FOUND : HttpStatus.BAD_REQUEST);
     }
 

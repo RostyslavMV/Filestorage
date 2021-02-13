@@ -5,10 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ErrorInfo extends SuccessInfo {
+public class ErrorInfoDTO extends SuccessInfoDTO {
     private String error;
 
-    public ErrorInfo(String message) {
+    public ErrorInfoDTO(String message) {
         this.success = false;
         this.error = message;
     }

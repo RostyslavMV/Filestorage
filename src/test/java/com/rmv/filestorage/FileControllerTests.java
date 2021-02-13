@@ -1,9 +1,9 @@
 package com.rmv.filestorage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rmv.filestorage.dto.ErrorInfo;
-import com.rmv.filestorage.dto.FilesPage;
-import com.rmv.filestorage.dto.SuccessInfo;
+import com.rmv.filestorage.dto.ErrorInfoDTO;
+import com.rmv.filestorage.dto.FilesPageDTO;
+import com.rmv.filestorage.dto.SuccessInfoDTO;
 import com.rmv.filestorage.model.File;
 import com.rmv.filestorage.repository.FileRepository;
 import org.junit.jupiter.api.Test;
@@ -79,7 +79,7 @@ class FileControllerTests {
 
         ResultActions resultActions = mvc.perform(msb);
 
-        String expectedJson = mapper.writeValueAsString(new SuccessInfo(true));
+        String expectedJson = mapper.writeValueAsString(new SuccessInfoDTO(true));
 
         resultActions.andExpect(status().isOk()).andExpect(content().string(expectedJson));
     }
@@ -96,7 +96,7 @@ class FileControllerTests {
 
         ResultActions resultActions = mvc.perform(msb);
 
-        String expectedJson = mapper.writeValueAsString(new ErrorInfo("file not found"));
+        String expectedJson = mapper.writeValueAsString(new ErrorInfoDTO("file not found"));
 
         resultActions.andExpect(status().isNotFound()).andExpect(content().string(expectedJson));
     }
@@ -123,7 +123,7 @@ class FileControllerTests {
 
         ResultActions resultActions = mvc.perform(msb);
 
-        String expectedJson = mapper.writeValueAsString(new SuccessInfo(true));
+        String expectedJson = mapper.writeValueAsString(new SuccessInfoDTO(true));
 
         resultActions.andExpect(status().isOk()).andExpect(content().string(expectedJson));
     }
@@ -147,7 +147,7 @@ class FileControllerTests {
 
         ResultActions resultActions = mvc.perform(msb);
 
-        String expectedJson = mapper.writeValueAsString(new ErrorInfo("file not found"));
+        String expectedJson = mapper.writeValueAsString(new ErrorInfoDTO("file not found"));
 
         resultActions.andExpect(status().isNotFound()).andExpect(content().string(expectedJson));
     }
@@ -175,7 +175,7 @@ class FileControllerTests {
 
         ResultActions resultActions = mvc.perform(msb);
 
-        String expectedJson = mapper.writeValueAsString(new SuccessInfo(true));
+        String expectedJson = mapper.writeValueAsString(new SuccessInfoDTO(true));
 
         resultActions.andExpect(status().isOk()).andExpect(content().string(expectedJson));
     }
@@ -203,7 +203,7 @@ class FileControllerTests {
 
         ResultActions resultActions = mvc.perform(msb);
 
-        String expectedJson = mapper.writeValueAsString(new ErrorInfo("tag not found on file"));
+        String expectedJson = mapper.writeValueAsString(new ErrorInfoDTO("tag not found on file"));
 
         resultActions.andExpect(status().isBadRequest()).andExpect(content().string(expectedJson));
     }
@@ -227,7 +227,7 @@ class FileControllerTests {
 
         ResultActions resultActions = mvc.perform(msb);
 
-        String expectedJson = mapper.writeValueAsString(new ErrorInfo("file not found"));
+        String expectedJson = mapper.writeValueAsString(new ErrorInfoDTO("file not found"));
 
         resultActions.andExpect(status().isNotFound()).andExpect(content().string(expectedJson));
     }
@@ -250,7 +250,7 @@ class FileControllerTests {
 
         ResultActions resultActions = mvc.perform(msb);
 
-        String expectedJson = mapper.writeValueAsString(new FilesPage(1, Collections.singletonList(file)));
+        String expectedJson = mapper.writeValueAsString(new FilesPageDTO(1, Collections.singletonList(file)));
 
         resultActions.andExpect(status().isOk()).andExpect(content().string(expectedJson));
     }
