@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class FIieExtensionToTagService {
+public class FileExtensionToTagService {
 
     private final Map<String, String> extensionToTagMap = new HashMap<>();
 

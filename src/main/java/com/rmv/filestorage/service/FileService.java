@@ -21,7 +21,7 @@ import java.util.Set;
 public class FileService{
 
     private final FileRepository fileRepository;
-    private final FIieExtensionToTagService fIleExtensionToTagService;
+    private final FileExtensionToTagService fIleExtensionToTagService;
 
     public File save(File file){
         fIleExtensionToTagService.getTagByExtension(file);

@@ -1,4 +1,4 @@
-package com.rmv.filestorage;
+package com.rmv.filestorage.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rmv.filestorage.dto.ErrorInfoDTO;
