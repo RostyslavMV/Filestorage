@@ -65,8 +65,9 @@ public class FileController {
     public FilesPageDTO listFilesWithPagination(
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size,
-            @RequestParam(required = false) String... tags) {
+            @RequestParam(required = false, defaultValue = "") String q,
+            @RequestParam(required = false) String... tags){
 
-        return fileService.listFilesWithPagination(page,size,tags);
+        return fileService.listFilesWithPagination(page,size,q,tags);
     }
 }

@@ -6,6 +6,7 @@ import com.rmv.filestorage.exception.FileNotFoundInRepositoryException;
 import com.rmv.filestorage.model.File;
 import com.rmv.filestorage.repository.FileRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,17 +19,17 @@ import java.util.Set;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class FileService{
+public class FileService {
 
     private final FileRepository fileRepository;
     private final FileExtensionToTagService fIleExtensionToTagService;
 
-    public File save(File file){
+    public File save(File file) {
         fIleExtensionToTagService.getTagByExtension(file);
         return fileRepository.save(file);
     }
 
-    public void deleteById(String id){
+    public void deleteById(String id) {
         Optional<File> optionalFile = fileRepository.findById(id);
         if (optionalFile.isEmpty()) {
             throw new FileNotFoundInRepositoryException("file not found");
@@ -36,7 +37,7 @@ public class FileService{
         fileRepository.delete(optionalFile.get());
     }
 
-    public void assignTagsById(String id, Set<String> tags){
+    public void assignTagsById(String id, Set<String> tags) {
         Optional<File> optionalFile = fileRepository.findById(id);
         if (optionalFile.isEmpty()) {
             throw new FileNotFoundInRepositoryException("file not found");
@@ -46,7 +47,7 @@ public class FileService{
         fileRepository.save(file);
     }
 
-    public void removeTagsById(String id, Set<String> tags){
+    public void removeTagsById(String id, Set<String> tags) {
         Optional<File> optionalFile = fileRepository.findById(id);
         if (optionalFile.isEmpty()) {
             throw new FileNotFoundInRepositoryException("file not found");
@@ -65,13 +66,14 @@ public class FileService{
         fileRepository.save(file);
     }
 
-    public FilesPageDTO listFilesWithPagination(int page, int size, String...tags){
+    public FilesPageDTO listFilesWithPagination(int page, int size, String namePart, String... tags) {
         Page<File> filesPage;
+        namePart = namePart.replace("\n", "").replace("\r", "");
         if (tags == null || tags.length == 0) {
-            filesPage = fileRepository.findAll(PageRequest.of(page, size));
+            filesPage = fileRepository.findAllByNameContains(namePart, PageRequest.of(page, size));
         } else {
             Set<String> tagsSet = new HashSet<>(Arrays.asList(tags));
-            filesPage = fileRepository.findAllByTags(tagsSet, PageRequest.of(page, size));
+            filesPage = fileRepository.findAllByTagsAndNameContains(tagsSet, namePart, PageRequest.of(page, size));
         }
         return new FilesPageDTO(filesPage.getTotalElements(), filesPage.getContent());
     }
