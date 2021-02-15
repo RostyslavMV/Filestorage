@@ -1,5 +1,6 @@
 package com.rmv.filestorage.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -18,6 +19,7 @@ public class File {
 
     @Id
     @Null(message = "Manual id value is not allowed")
+    @Setter(AccessLevel.NONE)
     private String id;
 
     @NotBlank(message = "Name of file must not be blank")

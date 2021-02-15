@@ -32,7 +32,7 @@ class FileExtensionToTagServiceTest {
     }
 
     @Test
-    void getTagByExtension(){
+    void getTagByExtensionShouldHaveTag(){
         File file = new File("name.txt", 456465L);
         fileExtensionToTagService.getTagByExtension(file);
         assertTrue(file.getTags().contains(testMap.get("txt")));
@@ -41,7 +41,19 @@ class FileExtensionToTagServiceTest {
         fileExtensionToTagService.getTagByExtension(file);
         assertTrue(file.getTags().contains(testMap.get("mp3")));
 
-        file = new File("name.mp88", 456465L);
+        file = new File("AAA.MP3", 456465L);
+        fileExtensionToTagService.getTagByExtension(file);
+        assertTrue(file.getTags().contains(testMap.get("mp3")));
+
+    }
+
+    @Test
+    void getTagByExtensionShouldNotHaveTag(){
+        File file = new File("name.mp88", 456465L);
+        fileExtensionToTagService.getTagByExtension(file);
+        assertTrue(file.getTags().isEmpty());
+
+        file = new File("mp3", 456465L);
         fileExtensionToTagService.getTagByExtension(file);
         assertTrue(file.getTags().isEmpty());
     }
