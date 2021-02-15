@@ -43,7 +43,7 @@ class FileControllerTests {
 
     @Test
     void uploadFile() throws Exception {
-        File file = new File("name", 456465);
+        File file = new File("name", 456465L);
         file.setId("id");
         String json = mapper.writeValueAsString(file);
         doReturn(file).when(fileRepository).save(any());
@@ -66,7 +66,7 @@ class FileControllerTests {
 
     @Test
     void deleteFileWhenFileExists() throws Exception {
-        File file = new File("name", 456465);
+        File file = new File("name", 456465L);
         file.setId("id");
 
         when(fileRepository.findById(any())).thenReturn(Optional.of(file));
@@ -103,7 +103,7 @@ class FileControllerTests {
 
     @Test
     void assignTagsWhenFileExists() throws Exception {
-        File file = new File("name", 456465);
+        File file = new File("name", 456465L);
         file.setId("id");
 
         Set<String> tags = new HashSet<>();
@@ -154,7 +154,7 @@ class FileControllerTests {
 
     @Test
     void removeTagsWhenFileExists() throws Exception {
-        File file = new File("name", 456465);
+        File file = new File("name", 456465L);
         file.setId("id");
 
         Set<String> tags = new HashSet<>();
@@ -182,7 +182,7 @@ class FileControllerTests {
 
     @Test
     void removeTagsWhenTagNotExists() throws Exception {
-        File file = new File("name", 456465);
+        File file = new File("name", 456465L);
         file.setId("id");
         file.getTags().add("tag1");
 
@@ -234,7 +234,7 @@ class FileControllerTests {
 
     @Test
     void listFilesWithPagination() throws Exception {
-        File file = new File("name", 456465);
+        File file = new File("name", 456465L);
         file.setId("id");
         file.getTags().add("tag1");
 

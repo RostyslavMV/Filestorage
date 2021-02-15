@@ -33,15 +33,15 @@ class FileExtensionToTagServiceTest {
 
     @Test
     void getTagByExtension(){
-        File file = new File("name.txt", 456465);
+        File file = new File("name.txt", 456465L);
         fileExtensionToTagService.getTagByExtension(file);
         assertTrue(file.getTags().contains(testMap.get("txt")));
 
-        file = new File("name.mp3", 456465);
+        file = new File("name.mp3", 456465L);
         fileExtensionToTagService.getTagByExtension(file);
         assertTrue(file.getTags().contains(testMap.get("mp3")));
 
-        file = new File("name.mp88", 456465);
+        file = new File("name.mp88", 456465L);
         fileExtensionToTagService.getTagByExtension(file);
         assertTrue(file.getTags().isEmpty());
     }
