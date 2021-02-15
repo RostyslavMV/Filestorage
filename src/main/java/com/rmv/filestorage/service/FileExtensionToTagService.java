@@ -9,19 +9,24 @@ import java.util.Map;
 @Service
 public class FileExtensionToTagService {
 
+    private static final String AUDIO = "audio";
+    private static final String DOCUMENT = "document";
+    private static final String VIDEO = "video";
+    private static final String IMAGE = "image";
+
     private final Map<String, String> extensionToTagMap = new HashMap<>();
 
     {
-        extensionToTagMap.put("mp3", "audio");
-        extensionToTagMap.put("flac", "audio");
-        extensionToTagMap.put("docx", "document");
-        extensionToTagMap.put("doc", "document");
-        extensionToTagMap.put("txt", "document");
-        extensionToTagMap.put("mp4", "video");
-        extensionToTagMap.put("avi", "video");
-        extensionToTagMap.put("png", "image");
-        extensionToTagMap.put("jpeg", "image");
-        extensionToTagMap.put("jpg", "image");
+        extensionToTagMap.put("mp3", AUDIO);
+        extensionToTagMap.put("flac", AUDIO);
+        extensionToTagMap.put("docx", DOCUMENT);
+        extensionToTagMap.put("doc", DOCUMENT);
+        extensionToTagMap.put("txt", DOCUMENT);
+        extensionToTagMap.put("mp4", VIDEO);
+        extensionToTagMap.put("avi", VIDEO);
+        extensionToTagMap.put("png", IMAGE);
+        extensionToTagMap.put("jpeg", IMAGE);
+        extensionToTagMap.put("jpg", IMAGE);
     }
 
     public void getTagByExtension(File file) {

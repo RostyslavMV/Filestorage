@@ -6,7 +6,6 @@ import com.rmv.filestorage.exception.FileNotFoundInRepositoryException;
 import com.rmv.filestorage.model.File;
 import com.rmv.filestorage.repository.FileRepository;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +20,9 @@ import java.util.Set;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class FileService {
 
+    private static final String FILE_NOT_FOUND = "file not found";
+    private static final String TAG_NOT_FOUND = "tag not found on file";
+
     private final FileRepository fileRepository;
     private final FileExtensionToTagService fIleExtensionToTagService;
 
@@ -32,7 +34,7 @@ public class FileService {
     public void deleteById(String id) {
         Optional<File> optionalFile = fileRepository.findById(id);
         if (optionalFile.isEmpty()) {
-            throw new FileNotFoundInRepositoryException("file not found");
+            throw new FileNotFoundInRepositoryException(FILE_NOT_FOUND);
         }
         fileRepository.delete(optionalFile.get());
     }
@@ -40,7 +42,7 @@ public class FileService {
     public void assignTagsById(String id, Set<String> tags) {
         Optional<File> optionalFile = fileRepository.findById(id);
         if (optionalFile.isEmpty()) {
-            throw new FileNotFoundInRepositoryException("file not found");
+            throw new FileNotFoundInRepositoryException(FILE_NOT_FOUND);
         }
         File file = optionalFile.get();
         file.getTags().addAll(tags);
@@ -50,14 +52,14 @@ public class FileService {
     public void removeTagsById(String id, Set<String> tags) {
         Optional<File> optionalFile = fileRepository.findById(id);
         if (optionalFile.isEmpty()) {
-            throw new FileNotFoundInRepositoryException("file not found");
+            throw new FileNotFoundInRepositoryException(FILE_NOT_FOUND);
         }
         File file = optionalFile.get();
         Set<String> fileTags = file.getTags();
 
         for (String tag : tags) {
             if (!fileTags.contains(tag))
-                throw new BadRequestException("tag not found on file");
+                throw new BadRequestException(TAG_NOT_FOUND);
         }
 
         for (String tag : tags) {
