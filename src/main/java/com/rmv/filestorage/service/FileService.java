@@ -70,7 +70,8 @@ public class FileService {
 
     public FilesPageDTO listFilesWithPagination(int page, int size, String namePart, String... tags) {
         Page<File> filesPage;
-        namePart = namePart.replace("\n", "").replace("\r", "");
+        namePart = namePart.replaceAll("(\\r\\n|\\n|\\r)", "");
+        String s = "sdas\n";
         if (tags == null || tags.length == 0) {
             filesPage = fileRepository.findAllByNameContains(namePart, PageRequest.of(page, size));
         } else {
