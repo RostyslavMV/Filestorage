@@ -25,7 +25,7 @@ public class FileExtensionToTagService {
     }
 
     public void getTagByExtension(File file) {
-        String[] splittedFileName = file.getName().split("\\.");
+        String[] splittedFileName = file.getName().toLowerCase().split("\\.");
         String extension = splittedFileName[splittedFileName.length - 1];
         if (extensionToTagMap.containsKey(extension)){
             file.getTags().add(extensionToTagMap.get(extension));
