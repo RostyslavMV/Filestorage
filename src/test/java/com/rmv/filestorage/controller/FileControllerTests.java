@@ -240,7 +240,7 @@ class FileControllerTests {
 
         PageImpl<File> page = new PageImpl<>(Collections.singletonList(file));
 
-        when(fileRepository.findAll(any(PageRequest.class))).thenReturn(page);
+        when(fileRepository.findAllByNameContains(any(), any(PageRequest.class))).thenReturn(page);
 
         MockHttpServletRequestBuilder msb = get("/file");
 
