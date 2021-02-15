@@ -24,10 +24,10 @@ public class FileService {
     private static final String TAG_NOT_FOUND = "tag not found on file";
 
     private final FileRepository fileRepository;
-    private final FileExtensionToTagService fIleExtensionToTagService;
+    private final FileExtensionToTagService fileExtensionToTagService;
 
     public File save(File file) {
-        fIleExtensionToTagService.getTagByExtension(file);
+        fileExtensionToTagService.getTagByExtension(file);
         return fileRepository.save(file);
     }
 
@@ -71,7 +71,6 @@ public class FileService {
     public FilesPageDTO listFilesWithPagination(int page, int size, String namePart, String... tags) {
         Page<File> filesPage;
         namePart = namePart.replaceAll("(\\r\\n|\\n|\\r)", "");
-        String s = "sdas\n";
         if (tags == null || tags.length == 0) {
             filesPage = fileRepository.findAllByNameContains(namePart, PageRequest.of(page, size));
         } else {

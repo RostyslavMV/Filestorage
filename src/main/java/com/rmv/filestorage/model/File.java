@@ -8,8 +8,11 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import javax.validation.constraints.*;
-import java.util.LinkedHashSet;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import java.util.HashSet;
 import java.util.Set;
 
 @Document(indexName = "storage", indexStoreType = "file")
@@ -35,6 +38,6 @@ public class File {
     public File(String name, Long size) {
         this.name = name;
         this.size = size;
-        tags = new LinkedHashSet<>();
+        tags = new HashSet<>();
     }
 }
