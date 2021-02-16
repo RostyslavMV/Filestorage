@@ -1,6 +1,7 @@
 package com.rmv.filestorage.service;
 
 import com.rmv.filestorage.dto.FilesPageDTO;
+import com.rmv.filestorage.exception.BadRequestException;
 import com.rmv.filestorage.model.File;
 import com.rmv.filestorage.repository.FileRepository;
 import org.junit.jupiter.api.Test;
@@ -68,6 +69,20 @@ class FileServiceTest {
         assertEquals(0, file.getTags().size());
     }
 
+    @Test()
+    void removeTagsByIdBadRequest() {
+        File file = new File("name", 456465L);
+        when(fileRepository.findById(any())).thenReturn(Optional.of(file));
+
+        Set<String> tags = new HashSet<>(Arrays.asList("tag1", "tag2"));
+        file.setTags(tags);
+
+        assertThrows(BadRequestException.class,
+                () -> fileService.removeTagsById(file.getId(),
+                        new HashSet<>(Arrays.asList("tag2", "tag3"))));
+        assertEquals(2, file.getTags().size());
+    }
+
     @Test
     void listFilesWithPagination() {
         File file = new File("name", 456465L);
@@ -77,9 +92,9 @@ class FileServiceTest {
         when(fileRepository.findAllByNameContains(any(), any(PageRequest.class))).thenReturn(page);
 
         FilesPageDTO expectedPage = new FilesPageDTO(1, page.getContent());
-        FilesPageDTO actualPage =  fileService.listFilesWithPagination(0, 10, "");
+        FilesPageDTO actualPage = fileService.listFilesWithPagination(0, 10, "");
 
-        assertEquals(expectedPage.getTotal(),actualPage.getTotal());
-        assertEquals(expectedPage.getPage(),actualPage.getPage());
+        assertEquals(expectedPage.getTotal(), actualPage.getTotal());
+        assertEquals(expectedPage.getPage(), actualPage.getPage());
     }
 }
